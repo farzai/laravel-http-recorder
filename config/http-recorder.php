@@ -31,8 +31,9 @@ return [
      */
     'except' => [
         'urls' => [
-            'telescope-api*',
-            'nova-api*',
+            'telescope*',
+            'horizon*',
+            'nova*',
         ],
 
         'methods' => [
