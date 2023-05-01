@@ -3,6 +3,15 @@
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 
+beforeEach(function () {
+    $this->app['config']->set('http-recorder.enabled', true);
+
+    $this->app['config']->set('http-recorder.drivers.database', [
+        'connection' => 'testing',
+        'table' => 'http_log_requests',
+    ]);
+});
+
 it('can log request', function () {
     // Set up routes
     Route::name('example-http-log')
@@ -84,6 +93,39 @@ it("Should't log request if disabled", function () {
     $this->assertDatabaseMissing('http_log_requests', [
         'method' => 'GET',
         'uri' => '/api/example',
+        'response_status' => 200,
+    ]);
+});
+
+it('can exclude routes', function () {
+    $this->assertDatabaseMissing('http_log_requests', [
+        'method' => 'GET',
+        'uri' => '/api/example-exclude',
+        'response_status' => 200,
+    ]);
+
+    // Set up routes
+    Route::name('example-http-log')
+        ->get('/api/example-exclude', function () {
+            return response()->json(['message' => 'Hello World!']);
+        });
+
+    $this->app['config']->set('http-recorder.except.urls', [
+        '/api/example-exclude',
+    ]);
+
+    $this->assertTrue($this->app['config']->get('http-recorder.enabled'));
+    $this->assertEquals([
+        '/api/example-exclude',
+    ], $this->app['config']->get('http-recorder.except.urls'));
+
+    $response = $this->getJson('/api/example-exclude');
+
+    $response->assertOk();
+
+    $this->assertDatabaseMissing('http_log_requests', [
+        'method' => 'GET',
+        'uri' => '/api/example-exclude',
         'response_status' => 200,
     ]);
 });
