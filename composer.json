@@ -1,10 +1,15 @@
 {
     "name": "farzai/laravel-http-recorder",
-    "description": "This is my package laravel-http-recorder",
+    "description": "A simple HTTP recorder for Laravel",
     "keywords": [
         "farzai",
         "laravel",
-        "laravel-http-recorder"
+        "laravel-http-recorder",
+        "logger",
+        "http",
+        "recorder",
+        "http-recorder",
+        "http-logger"
     ],
     "homepage": "https://github.com/farzai/laravel-http-recorder",
     "license": "MIT",
