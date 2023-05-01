@@ -1,4 +1,6 @@
-.idea
+/.vscode
+/.idea
+/.fleet
 .phpunit.cache
 build
 composer.lock
@@ -9,3 +11,4 @@ phpstan.neon
 testbench.yaml
 vendor
 node_modules
+**/.DS_Store

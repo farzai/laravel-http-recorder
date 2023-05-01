@@ -1,17 +1,16 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "farzai/laravel-http-recorder",
+    "description": "This is my package laravel-http-recorder",
     "keywords": [
-        ":vendor_name",
+        "farzai",
         "laravel",
-        ":package_slug"
+        "laravel-http-recorder"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/farzai/laravel-http-recorder",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "parsilver",
             "role": "Developer"
         }
     ],
@@ -35,13 +34,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Farzai\\HttpRecorder\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "Farzai\\HttpRecorder\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -61,11 +59,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
-            }
+                "Farzai\\HttpRecorder\\HttpRecorderServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",
