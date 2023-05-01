@@ -38,6 +38,18 @@ class RequestRecorder
     }
 
     /**
+     * Determine if the request should be recorded.
+     */
+    public function shouldRecord(Request $request): bool
+    {
+        if (! $this->isEnable() || $this->isExcluded($request)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Record the request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -70,6 +82,33 @@ class RequestRecorder
         RecordJob::dispatch($entry)
             ->onQueue(data_get($this->config, 'queue.name'))
             ->onConnection(data_get($this->config, 'queue.connection'));
+    }
+
+    /**
+     * Determine if the request should be excluded.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function isExcluded($request)
+    {
+        $methodExcluded = collect($this->config['except']['methods'] ?? [])
+            ->map(fn ($method) => Str::is($method, $request->method()))
+            ->contains(true);
+
+        if ($methodExcluded) {
+            return true;
+        }
+
+        $urlExcluded = collect($this->config['except']['urls'] ?? [])
+            ->map(fn ($url) => Str::is(ltrim($url, '/'), $request->path()))
+            ->contains(true);
+
+        if ($urlExcluded) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

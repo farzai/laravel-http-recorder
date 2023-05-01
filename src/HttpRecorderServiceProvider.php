@@ -33,7 +33,7 @@ class HttpRecorderServiceProvider extends PackageServiceProvider
     {
         $this->app['events']->listen(RequestHandled::class, ProcessLog::class);
 
-        $this->app->singleton(RequestRecorder::class, function ($app) {
+        $this->app->bind(RequestRecorder::class, function ($app) {
             return new RequestRecorder($app['config']->get('http-recorder'));
         });
 

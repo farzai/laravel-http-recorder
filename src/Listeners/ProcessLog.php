@@ -24,10 +24,8 @@ class ProcessLog
      */
     public function handle($event)
     {
-        if (! $this->recorder->isEnable()) {
-            return;
+        if ($this->recorder->shouldRecord($event->request)) {
+            $this->recorder->record($event->request, $event->response);
         }
-
-        $this->recorder->record($event->request, $event->response);
     }
 }

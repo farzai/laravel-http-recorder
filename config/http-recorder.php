@@ -30,7 +30,7 @@ return [
      * Exclude routes from being logged.
      */
     'except' => [
-        'url' => [
+        'urls' => [
             'telescope-api*',
             'nova-api*',
         ],
